@@ -1,0 +1,22 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.banner{
+    background-color: aqua;
+    height: 5rem;
+}
+
+.header{
+    font-size: 4vh;
+    background-color: rebeccapurple;
+}
+
+.content{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2vh;
+    outline: 3px;
+    padding: 2vh;
+}

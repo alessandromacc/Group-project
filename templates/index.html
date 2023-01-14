@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/unique.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="banner"></div>
+    <div class="header">
+        Welcome, these are the active operations:
+    </div>
+    <div class="content">
+        <ul>
+        {% for i in reg.registry %}
+        <li><a href="/basicInfo">{{i}}</a></li>
+        {%endfor%}
+        </ul>
+    </div>
+</body>
+</html>
