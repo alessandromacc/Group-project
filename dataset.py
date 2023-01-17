@@ -26,3 +26,17 @@ class Dataset:
                 return 'Operation not active'
         except KeyError:
             return 'Not existing operation'
+
+class FeaturesCount(Operation):
+    def __init__(self, status: bool = False, name: str = 'FeaturesCount'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset):
+        if d.queried == True:
+            col = d.dataframe['Source']
+            counter = {}
+            for i in col:
+                if i not in ['.', 'GRCh38']:
+                    counter[i] = counter.get(i, 0) + 1
+            result = Dataset(pandas.DataFrame([j,k] for j,k in counter.items()))
+            return result
