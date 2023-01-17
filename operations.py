@@ -24,15 +24,6 @@ class Operation(ABC):
     def operation(self, d: pandas.DataFrame):
         pass
 
-class BasicInfo(Operation):
-    def __init__(self, status: bool = True, name: str = 'BasicInfo'):
-        super().__init__(status, name)
-    
-    @staticmethod
-    def operation(d: pandas.DataFrame) -> list:
-        cn = [i for i in d.columns]
-        return cn
-
 class OperationRegistry:
     def __init__(self, *ops: Operation):
         self.__registry: dict = {i.name:i for i in ops}

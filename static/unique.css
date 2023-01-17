@@ -20,3 +20,20 @@
     outline: 3px;
     padding: 2vh;
 }
+table{
+    width: 50%;
+    border-collapse: collapse;
+}
+tr{
+    height: 30px;
+}
+
+td, th{
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+tr:hover{
+    background-color: lightblue;
+    transition: linear;
+    transition-duration: 150ms;
+}

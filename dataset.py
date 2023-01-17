@@ -5,27 +5,40 @@ import typing
 class Dataset:
     def __init__(self, df: pd.DataFrame):
         self.__dataframe: pd.DataFrame = df
-        self.__col_names: list = [i for i in self.__dataframe.columns]
+        self.__queried: bool = False
     
     @property
     def dataframe(self) -> pd.DataFrame:
         return self.__dataframe
     
     @property
-    def col_names(self) -> list:
-        return self.__col_names
+    def queried(self) -> bool:
+        return self.__queried
     
     def __query(self, r: OperationRegistry, op: str) -> bool:
+        self.__queried = True
         return r.status_registry[op]
     
     def execute(self, r: OperationRegistry, op: str):
         try:
             if self.__query(r, op) == True:
-                return r.registry[op].operation(self.dataframe)
+                result = r.registry[op].operation(self)
+                self.__queried = False
+                return result
             else:
+                self.__queried = False
                 return 'Operation not active'
         except KeyError:
             return 'Not existing operation'
+
+class BasicInfo(Operation):
+    def __init__(self, status: bool = True, name: str = 'BasicInfo'):
+        super().__init__(status, name)
+    
+    @staticmethod
+    def operation(d: pandas.DataFrame) -> list:
+        cn = [i for i in d.columns]
+        return cn
 
 class FeaturesCount(Operation):
     def __init__(self, status: bool = False, name: str = 'FeaturesCount'):

@@ -1,8 +1,9 @@
-from ds_reader import dataset_reader, Dataset
+from ds_reader import *
 from operations import *
+from dataset import *
 
 reg = OperationRegistry(BasicInfo(name = 'BI'))
-x = dataset_reader('Homo_sapiens.GRCh38.85.gff3')
+x = Gff3Reader.read('Homo_sapiens.GRCh38.85.gff3')
 y = x.execute(reg, 'BI')
 print(y)
 print(x.dataframe.head(40))
