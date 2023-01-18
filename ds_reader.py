@@ -14,13 +14,15 @@ class DatasetReader(ABC):
         pass
 
 class Gff3Reader(DatasetReader):
+    '''Non abstract subclass of the abstract class DatasetReader, specifically designed for gff3 files.'''
     def __init__(self, path: str = None):
         super().__init__(path)
     
     @staticmethod
     def read(path: str, delimiter: str = '\t', comment: str = '#', names: str|list = ['Chromosome or scaffold name', 'Source', 'Type', 'Feature Start', 'Feature End', 'Score', 'Strand', 'Phase', 'Attributes']) -> Dataset:
         '''
-        Global function relying on a Pandas reader to read a tabulated file and store data in a Dataset object (see Dataset documentation);
+        Only accepts a gff3 file as input.
+        Static method relying on a Pandas reader to read a tabulated file and store data in a Dataset object;
         Parse as first parameter the location of the file, compliantly with those accepted by Pandas read_csv;
         Parse a delimiter character, by default tab, standard in gff3 files, but can be changed by the user;
         Parse the character meant to be found first in a commment line that should not be read by the reader, by default hash;
