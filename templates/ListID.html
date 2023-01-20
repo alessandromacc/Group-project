@@ -5,19 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/unique.css">
-    <title>Home</title>
+    <title>ListID</title>
 </head>
 <body>
     <div class="banner"></div>
     <div class="header">
-        Welcome, these are the active operations:
+        List of the unique IDs found in the genome annotation:
     </div>
     <div class="content">
-        <ul>
-            <li><a href="/basicInfo" target="_blank">basicInfo</a></li>
-            <li><a href="/FeaturesCount" target="_blank">FeaturesCount</a></li>
-            <li><a href="/ListID" target="_blank">List IDs</a></li>
-        </ul>
+        <table>
+            {% for i in types.to_list() %}
+            <tr>
+                <td>{{i}}</td>
+            </tr>
+            {%endfor%}
+        </table>
     </div>
 </body>
 </html>

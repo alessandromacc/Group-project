@@ -42,13 +42,13 @@ class Dataset:
             return 'Not existing operation'
 
 class BasicInfo(Operation):
-    def __init__(self, status: bool = True, name: str = 'BasicInfo'):
+    def __init__(self, status: bool = False, name: str = 'BasicInfo'):
         super().__init__(status, name)
     
     @staticmethod
     def operation(d: Dataset) -> list:
         if d.queried == True:
-            cn = [i for i in d.columns]
+            cn = [i for i in d.dataframe.columns]
             return cn
 
 class FeaturesCount(Operation):
@@ -64,3 +64,12 @@ class FeaturesCount(Operation):
                     counter[i] = counter.get(i, 0) + 1
             result = Dataset(pandas.DataFrame([j,k] for j,k in counter.items()))
             return result
+
+class ListID(Operation):
+    def __init__(self, status: bool = False, name: str = 'ListID'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset):
+        if d.queried==True:
+            types = pd.Series(d.dataframe['Type'].unique())
+            return types
