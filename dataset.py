@@ -45,8 +45,8 @@ class BasicInfo(Operation):
     def __init__(self, status: bool = False, name: str = 'BasicInfo'):
         super().__init__(status, name)
     
-    @staticmethod
-    def operation(d: Dataset) -> list:
+    def operation(self, d: Dataset) -> list:
+        '''getting the some basic information about the dataset. The basic information are the name and data type ofeach column'''
         if d.queried == True:
             cn = [i for i in d.dataframe.columns]
             return cn
@@ -56,6 +56,7 @@ class FeaturesCount(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset):
+        '''counting the number of features provided by the same source'''
         if d.queried == True:
             col = d.dataframe['Source']
             counter = {}
@@ -70,6 +71,16 @@ class ListID(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset):
+        '''obtaining the list of unique sequence IDs available in the dataset'''
         if d.queried==True:
             types = pd.Series(d.dataframe['Type'].unique())
             return types
+
+class EntriesCount(Operation):
+    def __init__(self, status: bool = False, name: str = 'EntriesCount'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        '''counting the number of entries for each type of operation'''
+        if d.queried == True:
+            return d.dataframe['Type'].value_counts()
