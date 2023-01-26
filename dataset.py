@@ -1,6 +1,7 @@
 import pandas as pd
 from operations import *
 import typing
+from utility import *
 
 class Dataset:
     '''Dataset class, wraps around a pandas DataFrame, each attribute is converted to a property,
@@ -48,33 +49,33 @@ class BasicInfo(Operation):
     def operation(self, d: Dataset) -> list:
         '''getting the some basic information about the dataset. The basic information are the name and data type ofeach column'''
         if d.queried == True:
-            cn = [i for i in d.dataframe.columns]
-            return cn
+            return Dataset(pd.DataFrame([[i,j] for i,j in Gff3.description().items()]))
 
 class FeaturesCount(Operation):
     def __init__(self, status: bool = False, name: str = 'FeaturesCount'):
         super().__init__(status, name)
     
-    def operation(self, d: Dataset):
+    def operation(self, d: Dataset) -> Dataset:
         '''counting the number of features provided by the same source'''
         if d.queried == True:
-            col = d.dataframe['Source']
-            counter = {}
-            for i in col:
-                if i not in ['.', 'GRCh38']:
-                    counter[i] = counter.get(i, 0) + 1
-            result = Dataset(pandas.DataFrame([j,k] for j,k in counter.items()))
-            return result
+            return Dataset(d.dataframe.value_counts('Source', dropna=True))
 
 class ListID(Operation):
     def __init__(self, status: bool = False, name: str = 'ListID'):
         super().__init__(status, name)
     
-    def operation(self, d: Dataset):
+    def operation(self, d: Dataset) -> Dataset:
         '''obtaining the list of unique sequence IDs available in the dataset'''
         if d.queried==True:
-            types = pd.Series(d.dataframe['Type'].unique())
-            return types
+            return Dataset(pd.DataFrame(d.dataframe['Chromosome or scaffold name'].unique()))
+
+class ListTypes(Operation):
+    def __init__(self, status: bool = False, name: str = 'ListTypes'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        if d.queried == True:
+            return Dataset(pd.DataFrame(d.dataframe['Type'].unique()))
 
 class EntriesCount(Operation):
     def __init__(self, status: bool = False, name: str = 'EntriesCount'):
@@ -83,4 +84,46 @@ class EntriesCount(Operation):
     def operation(self, d: Dataset) -> Dataset:
         '''counting the number of entries for each type of operation'''
         if d.queried == True:
-            return d.dataframe['Type'].value_counts()
+            return Dataset(pd.DataFrame(d.dataframe.value_counts('Type')))
+
+class EntireChromosomes(Operation):
+    def __init__(self, status: bool = False, name: str = 'EntireChromosomes'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        if d.queried == True:
+            return Dataset(d.dataframe.loc[d.dataframe['Type'].isin(['chromosome'])])
+
+class UnassembledSeq(Operation):
+    def __init__(self, status: bool = False, name: str = 'UnassembledSeq'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        if d.queried == True:
+            selected = d.dataframe.loc[d.dataframe['Source'].isin(['GRCh38'])].value_counts('Type')
+            return Dataset(pd.DataFrame([['Fraction of unassembled sequences',f'{100*selected.loc["supercontig"]/selected.sum()} %']]))
+
+class EHselect(Operation):
+    def __init__(self, status: bool = False, name: str = 'EHselect'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        if d.queried == True:
+            return Dataset(d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana'])])
+
+class EHentries(Operation):
+    def __init__(self, status: bool = False, name: str = 'EHentries'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset):
+        if d.queried==True:
+            return Dataset(pd.DataFrame(d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana'])].value_counts('Type')))
+
+class EHGeneNames(Operation):
+    def __init__(self, status: bool = False, name: str = 'EHGeneNames'):
+        super().__init__(status, name)
+    
+    def operation(self, d: Dataset) -> Dataset:
+        if d.queried == True:
+            selected = d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana']) & d.dataframe['Type'].isin(['gene'])]
+            return Dataset(pd.DataFrame([i.split(';')[1] for i in selected['Attributes']]))

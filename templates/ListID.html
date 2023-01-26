@@ -14,7 +14,7 @@
     </div>
     <div class="content">
         <table>
-            {% for i in types.to_list() %}
+            {% for i in types.dataframe[0] %}
             <tr>
                 <td>{{i}}</td>
             </tr>

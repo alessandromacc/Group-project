@@ -32,8 +32,7 @@ def features_count():
     '''Operation page, parse for jinja rendering the value of the executed method'''
     global reg, df
     tdf = df.execute(reg, 'FeaturesCount')
-    height = len(tdf.dataframe[0])
-    return render_template('FeaturesCount.html', tdf = tdf, h = height)
+    return render_template('FeaturesCount.html', tdf = tdf)
 
 @myapp.route('/ListID')
 def list_IDs():

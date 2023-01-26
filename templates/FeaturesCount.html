@@ -16,10 +16,10 @@
     </div>
     <div class = "content">
         <table>
-            {% for i in range(h) %}
+            {% for i,j in tdf.dataframe.items() %}
             <tr>
-                <td>{{tdf.dataframe.iloc[i,0]}}</td>
-                <td>{{tdf.dataframe.iloc[i,1]}}</td>
+                <td>{{i}}</td>
+                <td>{{j}}</td>
             </tr>
             {% endfor %}
         </table>

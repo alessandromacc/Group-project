@@ -1,17 +1,7 @@
 from abc import ABC, abstractclassmethod
 import pandas
 import typing
-
-def switch(f):
-    '''Decorator used to switch on any newly defined operation.'''
-    def wrap(self, status: bool, name: str):
-        if status == False:
-            status = True
-        elif status == True:
-            status = False
-        func = f(self, status, name)
-        return func
-    return wrap
+from utility import *
 
 class Operation(ABC):
     '''Abstract class defining the basic characteristics of any operation: name and status. Both are turned into

@@ -2,6 +2,7 @@ import pandas as pd
 from dataset import Dataset
 from abc import ABC, abstractclassmethod
 import typing
+from utility import *
 
 class DatasetReader(ABC):
     '''General abstract interface for file readers, only takes path as optional argument since might come in handy
@@ -19,7 +20,7 @@ class Gff3Reader(DatasetReader):
         super().__init__(path)
     
     @staticmethod
-    def read(path: str, delimiter: str = '\t', comment: str = '#', names: str|list = ['Chromosome or scaffold name', 'Source', 'Type', 'Feature Start', 'Feature End', 'Score', 'Strand', 'Phase', 'Attributes']) -> Dataset:
+    def read(path: str, delimiter: str = '\t', comment: str = '#', names: str|list = [i for i in Gff3.description()], na_values: str|list = '.') -> Dataset:
         '''
         Only accepts a gff3 file as input.
         Static method relying on a Pandas reader to read a tabulated file and store data in a Dataset object;
@@ -31,7 +32,7 @@ class Gff3Reader(DatasetReader):
         '''
         try:
             if path.split('.')[-1] == 'gff3':
-                return Dataset(pd.read_csv(path, delimiter, comment=comment, names=names))
+                return Dataset(pd.read_csv(path, delimiter, comment=comment, names=names, na_values=na_values))
             else:
                 raise TypeError('FileTypeError: a gff3 file was required')
         except TypeError:

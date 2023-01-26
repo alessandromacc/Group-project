@@ -15,13 +15,14 @@
         Basic informations about the dataset:
     </div>
     <div class = 'content'>
-        <ul>
-            {% for i in bi %}
-            <li>
-                {{i}};
-            </li>
-            {%endfor%}
-        </ul>
+        <table>
+            {% for i in range(bi.dataframe[0].size) %}
+            <tr>
+                <td>{{bi.dataframe[0].iloc[i]}}</td>
+                <td>{{bi.dataframe[1].iloc[i]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </body>
 </html>
