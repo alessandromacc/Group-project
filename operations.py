@@ -15,10 +15,12 @@ class Operation(ABC):
     
     @property
     def status(self) -> bool:
+        '''getter for the status of an operation object'''
         return self.__status
     
     @property
     def name(self) -> str:
+        '''getter for the name of an operation object'''
         return self.__name
     
     @abstractclassmethod
@@ -35,10 +37,12 @@ class OperationRegistry:
     
     @property
     def registry(self) -> dict:
+        '''getter for the operation registry'''
         return self.__registry
     
     @property
     def status_registry(self) -> dict:
+        '''getter for the operation status registry'''
         return self.__status_registry
 
 

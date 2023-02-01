@@ -4,9 +4,17 @@
     margin: 0;
 }
 
+a{
+    text-decoration: none;
+}
+
 .banner{
     background-color: aqua;
-    height: 5rem;
+    width: 100%;
+    height: 6rem;
+    font-size: 5vh;
+    text-align: center;
+    vertical-align: bottom;
 }
 
 .header{
@@ -14,16 +22,51 @@
     background-color: rebeccapurple;
 }
 
+.header-home{
+    width: 100%;
+    font-size: 4vh;
+    background-color: plum;
+    text-align: center;
+    vertical-align: middle;
+    height: 6vh;
+}
+
 .content{
     font-family: 'Times New Roman', Times, serif;
     font-size: 2vh;
     outline: 3px;
-    padding: 2vh;
+    padding: 3vh;
 }
+
+.home{
+    font-size: 3vh;
+    padding: 7px 3rem 11px 3rem;
+    vertical-align: middle;
+    height: min-content;
+}
+
+.home:hover{
+    background-color: lightpink;
+    transition: linear;
+    transition-duration: 100ms;
+}
+
+.backhome{
+    text-align: center;
+    font-size: 3vh;
+    background-color: lightsalmon;
+}
+
 table{
     width: 50%;
     border-collapse: collapse;
 }
+
+.fullrow{
+    width: 100%;
+    table-layout: fixed;
+}
+
 tr{
     height: 30px;
 }
@@ -32,8 +75,15 @@ td, th{
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
+td{
+    word-wrap: break-word;
+}
+th{
+    text-decoration-style: wavy;
+    font-size: 20px;
+}
 tr:hover{
     background-color: lightblue;
     transition: linear;
-    transition-duration: 150ms;
+    transition-duration: 100ms;
 }

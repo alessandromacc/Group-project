@@ -27,7 +27,7 @@ class Gff3Reader(DatasetReader):
         Parse as first parameter the location of the file, compliantly with those accepted by Pandas read_csv;
         Parse a delimiter character, by default tab, standard in gff3 files, but can be changed by the user;
         Parse the character meant to be found first in a commment line that should not be read by the reader, by default hash;
-        Parse the list of names of the columns of the dataset you want to get, CHECK BLANKS MANAGEMENT.
+        Parse the list of names of the columns of the dataset you want to get, which need to be 9, compliantly to the gff3 file structure, otherwise correct data storage and functioning is not guaranteed.
         Returns a Dataset object.
         '''
         try:

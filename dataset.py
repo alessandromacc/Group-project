@@ -12,10 +12,12 @@ class Dataset:
     
     @property
     def dataframe(self) -> pd.DataFrame:
+        '''getter for the pandas dataframe'''
         return self.__dataframe
     
     @property
     def queried(self) -> bool:
+        '''getter for the queried attribute'''
         return self.__queried
     
     def __query(self, r: OperationRegistry, op: str) -> bool:
@@ -74,6 +76,7 @@ class ListTypes(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset) -> Dataset:
+        '''obtaining the list of unique type of operations available in the dataset'''
         if d.queried == True:
             return Dataset(pd.DataFrame(d.dataframe['Type'].unique()))
 
@@ -84,13 +87,14 @@ class EntriesCount(Operation):
     def operation(self, d: Dataset) -> Dataset:
         '''counting the number of entries for each type of operation'''
         if d.queried == True:
-            return Dataset(pd.DataFrame(d.dataframe.value_counts('Type')))
+            return Dataset(d.dataframe.value_counts('Type'))
 
 class EntireChromosomes(Operation):
     def __init__(self, status: bool = False, name: str = 'EntireChromosomes'):
         super().__init__(status, name)
     
     def operation(self, d: Dataset) -> Dataset:
+        '''deriving a new dataset containing only the information about entire chromosomes. Entries with entirechromosomes comes from source GRCh38'''
         if d.queried == True:
             return Dataset(d.dataframe.loc[d.dataframe['Type'].isin(['chromosome'])])
 
@@ -99,6 +103,7 @@ class UnassembledSeq(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset) -> Dataset:
+        '''calculating the fraction of unassembled sequences from source GRCh38'''
         if d.queried == True:
             selected = d.dataframe.loc[d.dataframe['Source'].isin(['GRCh38'])].value_counts('Type')
             return Dataset(pd.DataFrame([['Fraction of unassembled sequences',f'{100*selected.loc["supercontig"]/selected.sum()} %']]))
@@ -108,6 +113,7 @@ class EHselect(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset) -> Dataset:
+        '''obtaining a new dataset containing only entries from source  ensembl,  havana  and ensembl_havana'''
         if d.queried == True:
             return Dataset(d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana'])])
 
@@ -116,14 +122,16 @@ class EHentries(Operation):
         super().__init__(status, name)
     
     def operation(self, d: Dataset):
+        '''counting the number of entries for each type of operation for the dataset containing containing onlyentries from source  ensembl,  havana  and  ensembl_havana'''
         if d.queried==True:
-            return Dataset(pd.DataFrame(d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana'])].value_counts('Type')))
+            return Dataset(d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana'])].value_counts('Type'))
 
 class EHGeneNames(Operation):
     def __init__(self, status: bool = False, name: str = 'EHGeneNames'):
         super().__init__(status, name)
     
     def operation(self, d: Dataset) -> Dataset:
+        '''returning the gene names from the dataset containing containing only entries from source  ensembl, havana  and  ensembl_havana'''
         if d.queried == True:
             selected = d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana']) & d.dataframe['Type'].isin(['gene'])]
             return Dataset(pd.DataFrame([i.split(';')[1] for i in selected['Attributes']]))

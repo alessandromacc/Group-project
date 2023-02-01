@@ -5,20 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/unique.css">
-    <title>ListID</title>
+    <title>ListTypes</title>
 </head>
 <body>
-    <div class="banner"></div>
-    <div class="header">
-        List of the unique IDs found in the genome annotation:
+    <div class = "banner">
+
     </div>
-    <div class="content">
+    <div class = "header">
+        Here is a list of the different feature types in the dataset:
+    </div>
+    <div class = "content">
         <table>
-            {% for i in types.dataframe[0] %}
+            {% for i in d.dataframe[0] %}
             <tr>
                 <td>{{i}}</td>
             </tr>
-            {%endfor%}
+            {% endfor %}
         </table>
     </div>
     <div class = 'backhome'>
