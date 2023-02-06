@@ -17,9 +17,11 @@
     <div class="content">
         <table>
             <tr><th>Gene names</th></tr>
-            {% for i in d.dataframe[0] %}
+            {% set h = d.dataframe['name']|length %}
+            {% for i in range(h) %}
             <tr>
-                <td>{{i}}</td>
+                <td>{{d.dataframe.iloc[i,0]}}</td>
+                <td>{{d.dataframe.iloc[i,1]}}</td>
             </tr>
             {%endfor%}
         </table>

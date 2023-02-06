@@ -134,4 +134,7 @@ class EHGeneNames(Operation):
         '''returning the gene names from the dataset containing containing only entries from source  ensembl, havana  and  ensembl_havana'''
         if d.queried == True:
             selected = d.dataframe[d.dataframe['Source'].isin(['ensembl', 'havana', 'ensembl_havana']) & d.dataframe['Type'].isin(['gene'])]
-            return Dataset(pd.DataFrame([i.split(';')[1] for i in selected['Attributes']]))
+            a = pd.Series([i.split(';')[1].split('=')[1] for i in selected['Attributes']])
+            n = pd.Series([i for i in selected['Chromosome or scaffold name']])
+            d={'genename':a, 'name':n}
+            return Dataset(pd.DataFrame(data=d))
