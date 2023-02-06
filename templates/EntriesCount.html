@@ -5,29 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/unique.css">
-    <title>EntireChromosomes</title>
+    <title>EntriesCount</title>
 </head>
 <body>
     <div class = "banner">
 
     </div>
     <div class = "header">
-        Here is data about entire chromosomes in the genome assembly:
+        Here is a list of the entries for each available source:
     </div>
     <div class = "content">
-        <table class="fullrow">
+        <table>
+            {% for i,j in d.dataframe.items() %}
             <tr>
-            {%for z in desc.keys()%}
-            <th>{{z}}</th>
-            {%endfor%}
-            </tr>
-            {% for i in range(h) %}
-            <tr>
-                {% for j in d.dataframe.iloc[i] %}
-                <td>
-                    {{j}}
-                </td>
-                {%endfor%}
+                <td>{{i}}</td>
+                <td>{{j}}</td>
             </tr>
             {% endfor %}
         </table>

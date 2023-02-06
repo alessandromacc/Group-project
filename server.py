@@ -8,11 +8,11 @@ from ds_reader import Gff3Reader
 myapp = Flask('webapp')
 
 '''Define the operation registry with all the operations instances needed in the webpage.'''
-reg = OperationRegistry(BasicInfo(), FeaturesCount(), ListID(name='ID'), ListTypes(), EntriesCount(), EntireChromosomes(), UnassembledSeq(), EHselect(), EHentries(), EHGeneNames())
+reg = OperationRegistry(BasicInfo(), FeaturesCount(), ListID(), ListTypes(), EntriesCount(), EntireChromosomes(), UnassembledSeq(), EHselect(), EHentries(), EHGeneNames())
 
 '''Use the Gff3Reader class to read a gff3 file and store it into a Dataset object,
 pass as argument the path to the gff3 file.'''
-df = Gff3Reader.read('Homo_sapiens.GRCh38.85.gff3')
+df = Gff3Reader.read('/Users/Alessandro/Desktop/Uni/2° year/Advanced Programming/group pj-local/Homo_sapiens.GRCh38.85.gff3')
 
 @myapp.route('/')
 def index():
