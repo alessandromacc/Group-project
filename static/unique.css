@@ -58,32 +58,38 @@ a{
 }
 
 table{
-    width: 50%;
+    min-width: 30%;
+    
+    border: 1px solid;
     border-collapse: collapse;
 }
-
 .fullrow{
     width: 100%;
+    word-wrap: break-word;
     table-layout: fixed;
 }
 
-tr{
-    height: 30px;
-}
-
-td, th{
+td,th{
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    border-collapse: collapse;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+}
+tr:nth-child(even){
+    background-color: beige;
+}
+th{
+    height: 3rem;
 }
 td{
     word-wrap: break-word;
 }
-th{
-    text-decoration-style: wavy;
-    font-size: 20px;
+tr,td{
+    height: 2rem;
 }
 tr:hover{
     background-color: lightblue;
     transition: linear;
-    transition-duration: 100ms;
+    transition-duration: 75ms;
 }

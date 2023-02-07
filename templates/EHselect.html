@@ -21,11 +21,11 @@
                 <th>{{z}}</th>
                 {%endfor%}
             </tr>
-            {% set h = d.dataframe.columns[0]|length %}
-            {% for i in range(h) %}
+            {% set h = d.dataframe['Type']|length %}
+            {% for i in range(1000) %}
             <tr>
-                {% for j in d.dataframe.iloc[i] %}
-                <td>{{j}}</td>
+                {% for j in range(9) %}
+                <td>{{d.dataframe.iloc[i,j]}}</td>
                 {%endfor%}
             </tr>
             {%endfor%}
