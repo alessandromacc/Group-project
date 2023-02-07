@@ -20,7 +20,7 @@ class Gff3Reader(DatasetReader):
         super().__init__(path)
     
     @staticmethod
-    def read(path: str, delimiter: str = '\t', comment: str = '#', names: str|list = [i for i in Gff3.description()], na_values: str|list = '.') -> Dataset:
+    def read(path: str) -> Dataset:
         '''
         Only accepts a gff3 file as input.
         Static method relying on a Pandas reader to read a tabulated file and store data in a Dataset object;
@@ -32,7 +32,7 @@ class Gff3Reader(DatasetReader):
         '''
         try:
             if path.split('.')[-1] == 'gff3':
-                return Dataset(pd.read_csv(path, delimiter, comment=comment, names=names, na_values=na_values))
+                return Dataset(pd.read_csv(path, delimiter='\t', comment='#', names=[i for i in Gff3.description()], na_values='.'))
             else:
                 raise TypeError('FileTypeError: a gff3 file was required')
         except TypeError:

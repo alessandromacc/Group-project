@@ -80,17 +80,9 @@
             such as the one we are using as data. It has a static method read, which only accepts a gff3 file as an input and relies on a Pandas
             read_csv() to read a tabulated file and store data in a Dataset object, which is returned to the user.
             <br>
-            The parameters of the Gff3Reader.read() method are set by default, compliantly to the general structure of gff3 files, with the exception of the filepath, which needs to be provided by the user:
+            The only parameter of the Gff3Reader.read() method is the filepath, while other parameters required by the read_csv() function are set by default and cannot be modified by the user:
             <ul>
                 <li>path: a string indicating the path of the gff3 file to read</li>
-                <br>
-                <li>delimiter: a string indicating what character are the values in the file separated by. Its value is passed on directly to the Pandas read_csv() function, and defaults to '\t'. Changing its value might compromise the reading of the file.</li>
-                <br>
-                <li>comment: a string indicating the first character of any line that should be considered as a comment by read_csv(), and thus not treated as data; changing the value from the default '#' might compromise the reading of the gff3 file.</li>
-                <br>
-                <li>names: a list of strings containing the column names for the Pandas DataFrame created by the read_csv() function. The list is taken by default from Gff3.description() and changing the values will stop the correct execution of the software.</li>
-                <br>
-                <li>na_values: a string indicating which characters should be treated as non assigned values by read_csv(). Dafaulted to '.', and changing it might compromise the correct execution of the software.</li>
             </ul>
         </p>
     </div>
